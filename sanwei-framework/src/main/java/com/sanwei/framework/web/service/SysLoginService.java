@@ -5,6 +5,7 @@ import com.sanwei.common.exception.user.CaptchaException;
 import com.sanwei.common.exception.user.UserNotExistsException;
 import com.sanwei.common.exception.user.UserPasswordNotMatchException;
 //import com.sanwei.framework.security.context.AuthenticationContextHolder;
+import com.sanwei.common.utils.uuid.UUID;
 import com.sanwei.system.service.impl.SysUserServiceImpl;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.authentication.AuthenticationManager;
@@ -39,6 +40,9 @@ public class SysLoginService {
      * @return 结果
      */
     public String login(String username, String password, String code, String uuid) {
+
+        UUID uuid1 = UUID.randomUUID(false);
+
         // todo 验证码验证
         validateCaptcha(username, code, uuid);
         // todo 登录前置校验
