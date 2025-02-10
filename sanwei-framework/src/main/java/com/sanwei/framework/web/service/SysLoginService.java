@@ -5,7 +5,9 @@ import com.sanwei.common.exception.user.CaptchaException;
 import com.sanwei.common.exception.user.UserNotExistsException;
 import com.sanwei.common.exception.user.UserPasswordNotMatchException;
 //import com.sanwei.framework.security.context.AuthenticationContextHolder;
+import com.sanwei.common.utils.StringUtils;
 import com.sanwei.common.utils.uuid.UUID;
+import com.sanwei.framework.manager.AsyncManager;
 import com.sanwei.system.service.impl.SysUserServiceImpl;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.authentication.AuthenticationManager;
@@ -70,6 +72,11 @@ public class SysLoginService {
     }
 
     private void loginPreCheck(String username, String password) {
+        // 用户名或者密码为空  错误
+        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
+//            AsyncManager.me().execute(AsyncFactory);
+            throw new UserNotExistsException();
+        }
 
         SysUser user = sysUserService.selectUserByUserName(username);
         if (!Objects.isNull(user)) {
